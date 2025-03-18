@@ -1,0 +1,24 @@
+{
+    "source": {
+        "is_advanced": false,
+        "project_id": "01932410-12ea-795d-9677-2feb0e19fece",
+        "flow_path": "",
+        "sb_name": "",
+        "flow_name": "",
+        "org": "ib-internal",
+        "workspace": "SolEng_Workspace",
+        "app_id": "0dd7eb31-a53a-4629-abcd-0871fbff8722",
+        "deployment_id": "",
+        "dependencies": [""]
+    },
+    "target": {
+        "org": "aihub-uat-internal",
+        "workspace": "SolEng_Workspace",
+        "project_id": ""
+    },
+    "settings": {
+        "rebuild": true
+    },
+    "regression": {},
+    "release_notes": "<Release Notes>"
+}
