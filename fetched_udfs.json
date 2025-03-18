@@ -1,0 +1,170 @@
+{
+    "4797": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Invoice Number@1"
+            }
+        ],
+        "code": "\tif len(previous_line.split())>2:\n\t  return ''\n\treturn previous_line",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": "9",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1151212659:insaprd-use2-aihub-prd-docker-default-udf:8",
+        "last_updated_at": "1732772887000",
+        "name": "parse_invoice_number",
+        "udf_type": "REFINER"
+    },
+    "5035": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Invoice_Amount",
+                "value": "Invoice Amount"
+            },
+            {
+                "data_type": "FIELD",
+                "name": "Line_Items",
+                "value": "Line Items"
+            }
+        ],
+        "code": "\t\n\tinvoice_amount_value = float(Invoice_Amount)\n\tline_items = eval(Line_Items)\n\t\n\ttotal_line_items_amount = sum((float(item['Total Amount']['value']) for item in line_items))\n\tif invoice_amount_value < total_line_items_amount:\n\t    return f'Invoice Amount ({invoice_amount_value}) is less than the sum of Line Items total amount ({total_line_items_amount}).'\n\treturn None\n\t",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": "9",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1282010781:insaprd-use2-aihub-prd-docker-default-udf:8",
+        "last_updated_at": "1733225747000",
+        "name": "validate_invoice_amount",
+        "udf_type": "VALIDATIONS"
+    },
+    "5455": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Line Items@1"
+            }
+        ],
+        "code": "\timport json\n\tdata = json.loads(previous_line)\n\tkey_order = [\"Product Description\"\t,\"Quantity\",\"Unit Price\",\"Discounts\",\"Subtotal\",\"Total Amount\",\"Product Code\",\"Unit of Measure\"]\n\tfor record in data:\n\t    reordered_record = {\n\t        key: \"\" if not record.get(key) or record.get(key) == \"null\" else record[key]\n\t        for key in key_order\n\t    }\n\t    for key in record.keys():\n\t        if key not in reordered_record:\n\t            reordered_record[key] = \"\" if record[key] is None or record[key] == \"null\" else record[key]\n\t    record.clear()\n\t    record.update(reordered_record)\n\toutput = json.dumps(data, indent=4)\n\treturn output",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": "9",
+        "lambda_udf_id": "v1:AWS_LAMBDA:2886522567:insaprd-use2-aihub-prd-docker-default-udf:8",
+        "last_updated_at": "1735626009000",
+        "name": "reorder",
+        "udf_type": "REFINER"
+    },
+    "5617": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Invoice_Number",
+                "value": "Invoice Number"
+            }
+        ],
+        "code": "    import re\n    if not invoice_number or not isinstance(invoice_number, str) or (not invoice_number.strip()):\n        return 'Invoice Number is a required field and cannot be empty.'\n    pattern = re.compile('^[A-Za-z0-9\\\\-\\\\/]+$')\n    if not pattern.match(invoice_number):\n        return 'Invoice Number format is invalid.'\n    issued_documents = kwargs.get('issued_documents', [])\n    if invoice_number in issued_documents:\n        return 'Invoice Number must be unique and not already issued.'\n    return None",
+        "docstring": "    Validates the 'Invoice Number' field.\n    \n    Parameters:\n    - invoice_number (str): The invoice number to be validated. Expected formats include:\n      * '129984-166-1-1'\n      * '20170906002'\n      * 'VF-1714956'\n      * '801268544'\n      * '170908'\n      * 'BBME170349/2017-2018'\n      * '20231015-001'\n      * 'INV-2023-0001'\n      * '1234567890'\n      * 'INV-2023-9999'\n    - context (optional): Additional context for validation, default is None.\n    - **kwargs: Additional keyword arguments.\n    \n    Returns:\n    - str: Specific and relevant error message if validation fails, otherwise None.",
+        "lambda_end_of_life": null,
+        "lambda_id": "9",
+        "lambda_udf_id": "v1:AWS_LAMBDA:3398850466:insaprd-use2-aihub-prd-docker-default-udf:8",
+        "last_updated_at": "1737021934000",
+        "name": "validate_invoice_number",
+        "udf_type": "VALIDATIONS"
+    },
+    "5629": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Invoice_Number",
+                "value": "Invoice Number"
+            }
+        ],
+        "code": "    import re\n    if not invoice_number or not isinstance(invoice_number, str) or invoice_number.strip() == '':\n        return 'Invoice Number is a required field and cannot be empty.'\n    if len(invoice_number) > 40:\n        return 'Invoice Number cannot exceed 40 characters.'\n    if re.search('[\\\\n\\\\t]', invoice_number):\n        return 'Invoice Number cannot contain newline or tab characters.'\n    if re.search('[!@#]', invoice_number):\n        return 'Invoice Number cannot contain special characters like !, @, or #.'\n    return None",
+        "docstring": "    Validates the 'Invoice Number' field.\n    \n    Fields:\n    - invoice_number: str, required. The invoice number to be validated.\n    \n    Expected formats:\n    - Non-empty string without special characters like newlines, tabs, or excessive length.\n    \n    Returns:\n    - A string with a specific and relevant error message if validation fails.\n    - None if validation passes.",
+        "lambda_end_of_life": null,
+        "lambda_id": "9",
+        "lambda_udf_id": "v1:AWS_LAMBDA:4840819963:insaprd-use2-aihub-prd-docker-default-udf:8",
+        "last_updated_at": "1737043289000",
+        "name": "validate_invoice_number",
+        "udf_type": "VALIDATIONS"
+    },
+    "6165": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Invoice_Date",
+                "value": "Invoice Date"
+            }
+        ],
+        "code": "\timport re\n\tfrom datetime import datetime\n\t\n\tif Invoice_Date:\n\t\tdate_format = \"%m-%d-%Y\"\n\t\t# checking if format matches the date \n\t\tres1 = True\n\t\t# using try-except to check for truth value\n\t\ttry:\n\t\t\tres1 = bool(datetime.strptime(Invoice_Date, date_format))\n\t\texcept ValueError:\n\t\t\tres1 = False\n\t\n\t\tpattern_str = r'^\\d{2}-\\d{2}-\\d{4}$'\n\t\tif re.match(pattern_str, Invoice_Date):\n\t\t\tres2 = True\n\t\telse:\n\t\t\tres2 = False\n\t\n\t\tprint(res1, res2)\n\t\n\t\tif res1 and res2:\n\t\t\treturn None\n\t\n\t\treturn 'Incorrect Date format, its not in dd/mm/yyyy format'\n\t\n\telse:\n\t\t# Return a string to indicate validation failed\n\t\treturn \"Error: Invoice_Date is empty\"",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": "9",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1745114388:insaprd-use2-aihub-prd-docker-default-udf:8",
+        "last_updated_at": "1738672848000",
+        "name": "validate_invoice_date",
+        "udf_type": "VALIDATIONS"
+    },
+    "6166": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Currency",
+                "value": "Currency"
+            }
+        ],
+        "code": "\t# Import Python packages\n\t# import json\n\t\n\t# Log statements using print()\n\t# print(\"This will appear in the logs\")\n\tcurrency_code_list = ['GIP', 'BMD', 'CHE', 'TJS', 'KRW', 'NGN', 'BGN', 'ISK', 'KMF', 'AFN', 'MAD', 'NZD', 'FJD', 'CLP', 'DJF', 'TOP', 'BBD', 'XUA', 'BTN', 'IQD', 'WST', 'CRC', 'UYI', 'MKD', 'RON', 'SLE', 'TWD', 'CHF', 'UZS', 'AUD', 'ZMW', 'CHW', 'PGK', 'CNY', 'COU', 'GTQ', 'AOA', 'VEF', 'HNL', 'SAR', 'KHR', 'SDG', 'VND', 'ZWL', 'BHD', 'MRU', 'LBP', 'MVR', 'AZN', 'HUF', 'BSD', 'PAB', 'SYP', 'TRY', 'SGD', 'PEN', 'STN', 'THB', 'VED', 'XOF', 'BOV', 'CLF', 'DOP', 'ALL', 'VUV', 'PKR', 'RWF', 'BND', 'CDF', 'BYN', 'MOP', 'GBP', 'SZL', 'PLN', 'XAF', 'IDR', 'MWK', 'KWD', 'QAR', 'CZK', 'SOS', 'LKR', 'UAH', 'BZD', 'DKK', 'SHP', 'USN', 'AED', 'KPW', 'SRD', 'IRR', 'MMK', 'SEK', 'USD', 'BDT', 'CAD', 'NAD', 'OMR', 'FKP', 'KZT', 'XPF', 'XDR', 'XSU', 'CUC', 'CUP', 'UGX', 'TND', 'INR', 'NIO', 'LSL', 'LYD', 'AWG', 'LAK', 'ARS', 'BOB', 'ZAR', 'GMD', 'BWP', 'MXV', 'HTG', 'MDL', 'ANG', 'BIF', 'KYD', 'NPR', 'RUB', 'GYD', 'UYU', 'ERN', 'HKD', 'MGA', 'GNF', 'BRL', 'KES', 'BAM', 'COP', 'GEL', 'YER', 'CVE', 'GHS', 'AMD', 'JOD', 'PYG', 'LRD', 'SVC', 'NOK', 'SBD', 'JMD', 'SSP', 'JPY', 'EGP', 'PHP', 'ILS', 'TMT', 'MYR', 'TZS', 'EUR', 'RSD', 'MZN', 'MXN', 'DZD', 'TTD', 'MNT', 'KGS', 'MUR', 'ETB', 'XCD', 'SCR']\n\tif Currency:\n\t\t# Return None to indicate validation passed\n\t\tif Currency in currency_code_list:\n\t\t\treturn None\n\t\telse:\n\t\t\treturn \"Error: Invalid Currency Code found\"\n\telse:\n\t\t# Return a string to indicate validation failed\n\t\treturn \"Error: Currency is empty\"",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": "9",
+        "lambda_udf_id": "v1:AWS_LAMBDA:2039025676:insaprd-use2-aihub-prd-docker-default-udf:8",
+        "last_updated_at": "1738673239000",
+        "name": "validate_currency",
+        "udf_type": "VALIDATIONS"
+    },
+    "6167": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Supplier_Name",
+                "value": "Supplier Name"
+            },
+            {
+                "data_type": "FIELD",
+                "name": "Customer_Name",
+                "value": "Customer Name"
+            }
+        ],
+        "code": "\t# Import Python packages\n\t# import json\n\t\n\t# Log statements using print()\n\t# print(\"This will appear in the logs\")\n\t\n\tif Supplier_Name:\n\t\tif Customer_Name:\n\t\t\tif Supplier_Name == Customer_Name:\n\t\t\t\treturn \"Error: Supplier Name & Customer Name cannot be same\"\n\t# Return None to indicate validation passed\n\treturn None",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": "9",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1892949619:insaprd-use2-aihub-prd-docker-default-udf:8",
+        "last_updated_at": "1738673479000",
+        "name": "validate_supplier_name",
+        "udf_type": "VALIDATIONS"
+    },
+    "6168": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Supplier_Address",
+                "value": "Supplier Address"
+            },
+            {
+                "data_type": "FIELD",
+                "name": "Customer_Address",
+                "value": "Customer Address"
+            }
+        ],
+        "code": "\t\n\t# Similarity check can be done to improve this\n\tif Supplier_Address:\n\t\tif Customer_Address:\n\t\t\tif Supplier_Address == Customer_Address:\n\t\t\t\treturn \"Error: Supplier Name & Customer Name cannot be same\"\n\t# Return None to indicate validation passed\n\treturn None",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": "9",
+        "lambda_udf_id": "v1:AWS_LAMBDA:2163291656:insaprd-use2-aihub-prd-docker-default-udf:8",
+        "last_updated_at": "1738673771000",
+        "name": "validate_supplier_address",
+        "udf_type": "VALIDATIONS"
+    }
+}

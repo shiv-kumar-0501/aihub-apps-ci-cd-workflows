@@ -1,0 +1,112 @@
+{
+    "projects": [
+        {
+            "active_deployed_solution_id": "0dd7eb31-a53a-4629-abcd-0871fbff8722",
+            "createdAtMs": "1731476854000",
+            "creation_base": "NONE",
+            "data_root": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/01932410-12ea-795d-9677-2feb0e19fece",
+            "desc": "New project",
+            "extraction_mode": "SPLIT_CLASSIFICATION",
+            "id": "01932410-12ea-795d-9677-2feb0e19fece",
+            "llm": "gpt-3.5-turbo",
+            "matches_default_drive": true,
+            "name": "Invoice",
+            "needs_migration": false,
+            "owner": "bad540bd-774d-49ee-84bc-245d0549242b",
+            "ownerPublicId": "rohit.jain",
+            "project_root": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/01932410-12ea-795d-9677-2feb0e19fece",
+            "reader_profile": {
+                "createdBy": "",
+                "createdOn": 1731650606854,
+                "defaultProfile": "",
+                "foundationVersion": "",
+                "inputPath": null,
+                "lastModifiedBy": "",
+                "lastModifiedOn": 1731650606854,
+                "outputPath": null,
+                "profiles": [
+                    {
+                        "entitySettings": [],
+                        "name": "aihub",
+                        "readSettings": {
+                            "add_barcode_identifier": true,
+                            "cache_pdf_results": false,
+                            "correct_inversion": false,
+                            "correct_orientation": false,
+                            "correct_resolution": false,
+                            "correct_resolution_auto": false,
+                            "detect_barcodes": false,
+                            "detect_blurry_files": false,
+                            "dewarp_page": true,
+                            "document_mapping": "document_is_record_skip_empty_page",
+                            "enable_ibdoc_v2": true,
+                            "enable_paragraph_ordering": false,
+                            "enable_table_markdown_enrichment": false,
+                            "encryption_config": null,
+                            "entity_models": [
+                                {
+                                    "model_name": "signature_model",
+                                    "model_version": "0.0.4"
+                                },
+                                {
+                                    "model_name": "barcode_qrcode_detection",
+                                    "model_version": "1.0.0"
+                                }
+                            ],
+                            "extract_all_pdf_layers": false,
+                            "find_lines": false,
+                            "fonts": null,
+                            "force_image_ocr": true,
+                            "image_filters": null,
+                            "languages": [
+                                "en"
+                            ],
+                            "layout_algorithm": "layout_algo_spatial",
+                            "model_specific_settings": {
+                                "marx_v1": {
+                                    "version": "v3"
+                                }
+                            },
+                            "native_excel_processing": true,
+                            "ocr_page_type": "marx",
+                            "ocr_timeout": null,
+                            "output_format_layout": "layout_per_page",
+                            "output_formats": null,
+                            "page_range_str": "",
+                            "preprocess_excel_files": false,
+                            "process_type": "auto_to_txt",
+                            "produce_metadata_list": true,
+                            "produce_word_metadata": true,
+                            "remove_boxes": false,
+                            "remove_boxes_over_height_percent": null,
+                            "remove_boxes_over_width_percent": null,
+                            "remove_space_wordpolys": true,
+                            "remove_vertical_text": false,
+                            "reorient_words": false,
+                            "repair_pdfs": false,
+                            "scripts_dir": "",
+                            "write_converted_image": true,
+                            "write_thumbnail": true
+                        }
+                    }
+                ],
+                "schema": "1"
+            },
+            "repo_id": "98821aa8-fd02-43d9-9ae0-2b958213c050",
+            "settings": {
+                "advanced_ocr": {
+                    "isChangeLanguageType": true,
+                    "isSelectCheckboxes": false,
+                    "isSelectFileAsImage": false,
+                    "isSelectTables": false,
+                    "languageType": "standard",
+                    "nativeExcelProcessing": true,
+                    "pagesText": "",
+                    "version": "v1"
+                }
+            },
+            "updatedAtMs": "1742293925000",
+            "workspace": "SolEng_workspace"
+        }
+    ]
+}
