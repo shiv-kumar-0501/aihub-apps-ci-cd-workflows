@@ -1,0 +1,455 @@
+{
+    "project_data": {
+        "createdAtMs": "1731476854000",
+        "creationBase": "NONE",
+        "dataMountPath": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/01932410-12ea-795d-9677-2feb0e19fece",
+        "description": "New project",
+        "extractionMode": "SPLIT_CLASSIFICATION",
+        "id": "01932410-12ea-795d-9677-2feb0e19fece",
+        "llm": "gpt-3.5-turbo",
+        "name": "Invoice",
+        "owner": "bad540bd-774d-49ee-84bc-245d0549242b",
+        "ownerPublicId": "rohit.jain",
+        "projectMountPath": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/01932410-12ea-795d-9677-2feb0e19fece",
+        "repoId": "98821aa8-fd02-43d9-9ae0-2b958213c050",
+        "schemaVersion": "1",
+        "settings": {
+            "advanced_ocr": {
+                "isChangeLanguageType": true,
+                "isSelectCheckboxes": false,
+                "isSelectFileAsImage": false,
+                "isSelectTables": false,
+                "languageType": "standard",
+                "nativeExcelProcessing": true,
+                "pagesText": "",
+                "version": "v1"
+            }
+        },
+        "type": "BUILD",
+        "updatedAtMs": "1742293925000",
+        "workspace": "SolEng_workspace"
+    },
+    "project_schema": {
+        "Invoice": {
+            "class_id": "102311",
+            "description": "- get invoice\n- packaging list type docs is not an invoice",
+            "fields": [
+                {
+                    "data_type": "TEXT",
+                    "description": "Invoice Number , Unique identifier for each invoice",
+                    "field_id": "297640",
+                    "lines": [],
+                    "model_type": "DEFAULT",
+                    "name": "Invoice Number",
+                    "position": 0,
+                    "prompt": "Invoice Number",
+                    "prompt_schema": null,
+                    "prompt_type": "basic"
+                },
+                {
+                    "data_type": "TEXT",
+                    "description": "- get Date the invoice was issued",
+                    "field_id": "297641",
+                    "lines": [
+                        {
+                            "function_args": [],
+                            "function_id": null,
+                            "line_type": "PROMPT",
+                            "native_fn_name": null,
+                            "prompt": "clean and parse date to output format of  MM-DD-YYYY"
+                        }
+                    ],
+                    "model_type": "DEFAULT",
+                    "name": "Invoice Date",
+                    "position": 1,
+                    "prompt": "Invoice Date",
+                    "prompt_schema": null,
+                    "prompt_type": "basic"
+                },
+                {
+                    "data_type": "TEXT",
+                    "description": "Name of the company or individual issuing the invoice",
+                    "field_id": "297643",
+                    "lines": [
+                        {
+                            "function_args": [],
+                            "function_id": null,
+                            "line_type": "PROMPT",
+                            "native_fn_name": null,
+                            "prompt": "clean value"
+                        }
+                    ],
+                    "model_type": "DEFAULT",
+                    "name": "Supplier Name",
+                    "position": 2,
+                    "prompt": "Supplier Name",
+                    "prompt_schema": null,
+                    "prompt_type": "basic"
+                },
+                {
+                    "data_type": "TEXT",
+                    "description": "Address of the invoice issuer",
+                    "field_id": "297644",
+                    "lines": [
+                        {
+                            "function_args": [],
+                            "function_id": null,
+                            "line_type": "PROMPT",
+                            "native_fn_name": null,
+                            "prompt": "Clean value"
+                        }
+                    ],
+                    "model_type": "DEFAULT",
+                    "name": "Supplier Address",
+                    "position": 3,
+                    "prompt": "Supplier Address",
+                    "prompt_schema": null,
+                    "prompt_type": "basic"
+                },
+                {
+                    "data_type": "TEXT",
+                    "description": "Name of the individual or company being invoiced",
+                    "field_id": "297645",
+                    "lines": [
+                        {
+                            "function_args": [],
+                            "function_id": null,
+                            "line_type": "PROMPT",
+                            "native_fn_name": null,
+                            "prompt": "clean value"
+                        }
+                    ],
+                    "model_type": "DEFAULT",
+                    "name": "Customer Name",
+                    "position": 4,
+                    "prompt": "Customer Name",
+                    "prompt_schema": null,
+                    "prompt_type": "basic"
+                },
+                {
+                    "data_type": "TEXT",
+                    "description": "Address of the customer or client",
+                    "field_id": "297646",
+                    "lines": [
+                        {
+                            "function_args": [],
+                            "function_id": null,
+                            "line_type": "PROMPT",
+                            "native_fn_name": null,
+                            "prompt": "clean whitespace"
+                        }
+                    ],
+                    "model_type": "DEFAULT",
+                    "name": "Customer Address",
+                    "position": 5,
+                    "prompt": "Customer Address",
+                    "prompt_schema": null,
+                    "prompt_type": "basic"
+                },
+                {
+                    "data_type": "TEXT",
+                    "description": "- Total amount to be paid, often broken down by subtotal, tax, and total",
+                    "field_id": "297647",
+                    "lines": [
+                        {
+                            "function_args": [],
+                            "function_id": null,
+                            "line_type": "PROMPT",
+                            "native_fn_name": null,
+                            "prompt": "clean and parse amount to numeric value only"
+                        }
+                    ],
+                    "model_type": "DEFAULT",
+                    "name": "Invoice Amount",
+                    "position": 7,
+                    "prompt": "Invoice Amount",
+                    "prompt_schema": null,
+                    "prompt_type": "basic"
+                },
+                {
+                    "data_type": "OBJECT_LIST",
+                    "description": "Details of goods or services",
+                    "field_id": "297648",
+                    "lines": [
+                        {
+                            "function_args": [],
+                            "function_id": null,
+                            "line_type": "PROMPT",
+                            "native_fn_name": null,
+                            "prompt": "clean values of table and standardise numeric values. keep all column intact and keep column order as mentioned in list [\"Product Description\"\t,\"Quantity\",\"Unit Price\",\"Discounts\",\"Subtotal\",\"Total Amount\",\"Product Code\",\"Unit of Measure\"]"
+                        },
+                        {
+                            "function_args": [
+                                {
+                                    "data_type": "LINE",
+                                    "name": "previous_line",
+                                    "value": "Line Items@1"
+                                }
+                            ],
+                            "function_id": 5455,
+                            "line_type": "UDF",
+                            "native_fn_name": null,
+                            "prompt": null
+                        }
+                    ],
+                    "model_type": "DEFAULT",
+                    "name": "Line Items",
+                    "position": 6,
+                    "prompt": "Line Items",
+                    "prompt_schema": [
+                        {
+                            "description": "- A brief description of each item or service and clean the extracted value",
+                            "name": "Product Description"
+                        },
+                        {
+                            "description": "The amount or number of units of each item.",
+                            "name": "Quantity"
+                        },
+                        {
+                            "description": "Cost per unit for each item or service.  Clean amount to  numeric value only",
+                            "name": "Unit Price"
+                        },
+                        {
+                            "description": "Any discounts applied to individual line items.",
+                            "name": "Discounts"
+                        },
+                        {
+                            "description": "The total cost before tax for each item or service (Quantity x Unit Price). Clean amount to  numeric value only",
+                            "name": "Subtotal"
+                        },
+                        {
+                            "description": "The total cost for each line item, after applying any discounts and adding tax. Clean amount to  numeric value only",
+                            "name": "Total Amount"
+                        },
+                        {
+                            "description": "Unique identifier or SKU (Stock Keeping Unit) for inventory tracking.",
+                            "name": "Product Code"
+                        },
+                        {
+                            "description": "Specifies units (e.g., pieces, hours, kilograms) for clarity.",
+                            "name": "Unit of Measure"
+                        }
+                    ],
+                    "prompt_type": "basic"
+                },
+                {
+                    "data_type": "TEXT",
+                    "description": "The tax amount applied to the invoice, if applicable. Return 0 if tax amount is not found.",
+                    "field_id": "297649",
+                    "lines": [
+                        {
+                            "function_args": [],
+                            "function_id": null,
+                            "line_type": "PROMPT",
+                            "native_fn_name": null,
+                            "prompt": "clean and parse amount to numeric value only."
+                        }
+                    ],
+                    "model_type": "DEFAULT",
+                    "name": "Tax Amount",
+                    "position": 8,
+                    "prompt": "Tax Amount",
+                    "prompt_schema": null,
+                    "prompt_type": "basic"
+                },
+                {
+                    "data_type": "TEXT",
+                    "description": "The currency in which the invoice is issued",
+                    "field_id": "297650",
+                    "lines": [
+                        {
+                            "function_args": [],
+                            "function_id": null,
+                            "line_type": "PROMPT",
+                            "native_fn_name": null,
+                            "prompt": "parse currency value in ISO format"
+                        }
+                    ],
+                    "model_type": "DEFAULT",
+                    "name": "Currency",
+                    "position": 9,
+                    "prompt": "The currency in which the invoice is issued",
+                    "prompt_schema": null,
+                    "prompt_type": "advanced"
+                },
+                {
+                    "data_type": "TEXT",
+                    "description": "- Purchase Order Number , Reference to the order that this invoice is linked to.\n- don't take value from table untill all PO number same throughout the table",
+                    "field_id": "297651",
+                    "lines": [
+                        {
+                            "function_args": [],
+                            "function_id": null,
+                            "line_type": "PROMPT",
+                            "native_fn_name": null,
+                            "prompt": "Remove the prefix 'PO:' or 'PO#' or 'PO' if the value is prefixed with it."
+                        }
+                    ],
+                    "model_type": "DEFAULT",
+                    "name": "Purchase Order Number",
+                    "position": 10,
+                    "prompt": "Purchase Order Number",
+                    "prompt_schema": null,
+                    "prompt_type": "basic"
+                },
+                {
+                    "data_type": "TEXT",
+                    "description": "Terms of payment, like \"Net 30\" or \"Due upon receipt.\"",
+                    "field_id": "297652",
+                    "lines": [],
+                    "model_type": "DEFAULT",
+                    "name": "Payment Terms",
+                    "position": 11,
+                    "prompt": "Payment Terms",
+                    "prompt_schema": null,
+                    "prompt_type": "basic"
+                },
+                {
+                    "data_type": "TEXT",
+                    "description": "Method of payment accepted, such as bank transfer, credit card, or cash.",
+                    "field_id": "297653",
+                    "lines": [],
+                    "model_type": "DEFAULT",
+                    "name": "Payment Method",
+                    "position": 12,
+                    "prompt": "Payment Method",
+                    "prompt_schema": null,
+                    "prompt_type": "basic"
+                },
+                {
+                    "data_type": "TEXT",
+                    "description": "Information on how to make payments, such as bank details or online payment options.",
+                    "field_id": "297654",
+                    "lines": [],
+                    "model_type": "DEFAULT",
+                    "name": "Payment Instructions",
+                    "position": 13,
+                    "prompt": "Payment Instructions",
+                    "prompt_schema": null,
+                    "prompt_type": "basic"
+                }
+            ]
+        },
+        "Other": {
+            "class_id": "102312",
+            "description": "",
+            "fields": []
+        }
+    },
+    "project_udfs": {
+        "5455": {
+            "args": [
+                {
+                    "data_type": "LINE",
+                    "name": "previous_line",
+                    "value": "Line Items@1"
+                }
+            ],
+            "code": "\n\ndef reorder(previous_line, context = {}, keys = {}, **kwargs):\n\timport json\n\tdata = json.loads(previous_line)\n\tkey_order = [\"Product Description\"\t,\"Quantity\",\"Unit Price\",\"Discounts\",\"Subtotal\",\"Total Amount\",\"Product Code\",\"Unit of Measure\"]\n\tfor record in data:\n\t    reordered_record = {\n\t        key: \"\" if not record.get(key) or record.get(key) == \"null\" else record[key]\n\t        for key in key_order\n\t    }\n\t    for key in record.keys():\n\t        if key not in reordered_record:\n\t            reordered_record[key] = \"\" if record[key] is None or record[key] == \"null\" else record[key]\n\t    record.clear()\n\t    record.update(reordered_record)\n\toutput = json.dumps(data, indent=4)\n\treturn output",
+            "docstring": null,
+            "function_code": "\timport json\n\tdata = json.loads(previous_line)\n\tkey_order = [\"Product Description\"\t,\"Quantity\",\"Unit Price\",\"Discounts\",\"Subtotal\",\"Total Amount\",\"Product Code\",\"Unit of Measure\"]\n\tfor record in data:\n\t    reordered_record = {\n\t        key: \"\" if not record.get(key) or record.get(key) == \"null\" else record[key]\n\t        for key in key_order\n\t    }\n\t    for key in record.keys():\n\t        if key not in reordered_record:\n\t            reordered_record[key] = \"\" if record[key] is None or record[key] == \"null\" else record[key]\n\t    record.clear()\n\t    record.update(reordered_record)\n\toutput = json.dumps(data, indent=4)\n\treturn output",
+            "id": 5455,
+            "lambda_udf_id": "v1:AWS_LAMBDA:2886522567:insaprd-use2-aihub-prd-docker-default-udf:8",
+            "most_recent_results_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/01932410-12ea-795d-9677-2feb0e19fece/project/modules/scripts/REFINER/89c4161b-e299-416e-b46f-f373f25d8706_output.json",
+            "name": "reorder",
+            "project_uuid": "01932410-12ea-795d-9677-2feb0e19fece",
+            "return_type": "string",
+            "scripts_full_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/01932410-12ea-795d-9677-2feb0e19fece/project/modules/scripts/REFINER/89c4161b-e299-416e-b46f-f373f25d8706.json",
+            "type": "REFINER"
+        }
+    },
+    "project_validations": [
+        {
+            "affected_fields": [],
+            "alert_level": "FAILURE",
+            "created_at": 1738759750000,
+            "description": "",
+            "id": 5815,
+            "input_fields": [],
+            "name": "Rule 1",
+            "params": {
+                "confidence_threshold": 0.5
+            },
+            "scope": "PROJECT",
+            "type": "CONFIDENCE",
+            "updated_at": 1742293925000
+        }
+    ],
+    "reader_profile": {
+        "createdBy": "",
+        "createdOn": 1731650606854,
+        "defaultProfile": "",
+        "foundationVersion": "",
+        "inputPath": null,
+        "lastModifiedBy": "",
+        "lastModifiedOn": 1731650606854,
+        "outputPath": null,
+        "profiles": [
+            {
+                "entitySettings": [],
+                "name": "aihub",
+                "readSettings": {
+                    "add_barcode_identifier": true,
+                    "cache_pdf_results": false,
+                    "correct_inversion": false,
+                    "correct_orientation": false,
+                    "correct_resolution": false,
+                    "correct_resolution_auto": false,
+                    "detect_barcodes": false,
+                    "detect_blurry_files": false,
+                    "dewarp_page": true,
+                    "document_mapping": "document_is_record_skip_empty_page",
+                    "enable_ibdoc_v2": true,
+                    "enable_paragraph_ordering": false,
+                    "enable_table_markdown_enrichment": false,
+                    "encryption_config": null,
+                    "entity_models": [
+                        {
+                            "model_name": "signature_model",
+                            "model_version": "0.0.4"
+                        },
+                        {
+                            "model_name": "barcode_qrcode_detection",
+                            "model_version": "1.0.0"
+                        }
+                    ],
+                    "extract_all_pdf_layers": false,
+                    "find_lines": false,
+                    "fonts": null,
+                    "force_image_ocr": true,
+                    "image_filters": null,
+                    "languages": [
+                        "en"
+                    ],
+                    "layout_algorithm": "layout_algo_spatial",
+                    "model_specific_settings": {
+                        "marx_v1": {
+                            "version": "v3"
+                        }
+                    },
+                    "native_excel_processing": true,
+                    "ocr_page_type": "marx",
+                    "ocr_timeout": null,
+                    "output_format_layout": "layout_per_page",
+                    "output_formats": null,
+                    "page_range_str": "",
+                    "preprocess_excel_files": false,
+                    "process_type": "auto_to_txt",
+                    "produce_metadata_list": true,
+                    "produce_word_metadata": true,
+                    "remove_boxes": false,
+                    "remove_boxes_over_height_percent": null,
+                    "remove_boxes_over_width_percent": null,
+                    "remove_space_wordpolys": true,
+                    "remove_vertical_text": false,
+                    "reorient_words": false,
+                    "repair_pdfs": false,
+                    "scripts_dir": "",
+                    "write_converted_image": true,
+                    "write_thumbnail": true
+                }
+            }
+        ],
+        "schema": "1"
+    }
+}

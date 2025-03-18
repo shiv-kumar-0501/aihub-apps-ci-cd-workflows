@@ -20,5 +20,6 @@
         "rebuild": true
     },
     "regression": {},
-    "release_notes": "<Release Notes>"
+
+    "release_notes": "this is a superman"
 }
